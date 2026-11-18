@@ -76,18 +76,82 @@ def test_stopping_condition_all_pure():
     assert tree.root.is_leaf is True
     assert tree.root.prediction == "good"
 
-def test_stopping_condition_no_attributes_left_multiclass():
-    """7. Hết thuộc tính nhưng còn nhiều lớp -> Gán nhãn đa số."""
+def test_stopping_condition_zero_gain():
+    """7a. Gain lớn nhất = 0 (thuộc tính không mang thông tin) -> dừng, gán nhãn đa số."""
     data = pd.DataFrame({
         "feature_a": ["A", "A", "A"],
         "class": ["acc", "acc", "unacc"]
     })
-    # feature_a có 1 giá trị duy nhất, sau khi chọn xong không còn thuộc tính nào
     tree = ID3DecisionTree()
     tree.fit(data, attributes=["feature_a"], target="class")
-    # Thuộc tính có Gain = 0 nên dừng ngay và lấy majority là 'acc'
     assert tree.root.is_leaf is True
     assert tree.root.prediction == "acc"
+
+def test_stopping_condition_no_attributes_left_multiclass():
+    """7b. Đã dùng hết thuộc tính trên đường đi nhưng nút vẫn còn nhiều lớp -> lá mang nhãn đa số."""
+    # Dữ liệu mâu thuẫn: nhánh x = "A" có 2 acc + 1 unacc nhưng không còn thuộc tính nào để chia tiếp
+    data = pd.DataFrame({
+        "x": ["A", "A", "A", "B", "B"],
+        "class": ["acc", "acc", "unacc", "unacc", "unacc"]
+    })
+    tree = ID3DecisionTree()
+    tree.fit(data, attributes=["x"], target="class")
+    assert tree.root.attribute == "x"
+    leaf = tree.root.children["A"]
+    assert leaf.is_leaf is True
+    assert leaf.entropy_val > 0          # lá không thuần nhất
+    assert leaf.prediction == "acc"      # nhãn đa số 2/3
+
+# Ví dụ AllElectronic trong bài giảng "Phân lớp dữ liệu" (Han & Kamber, Bảng 8.1)
+ALL_ELECTRONICS = pd.DataFrame([
+    ("youth", "high", "no", "fair", "no"), ("youth", "high", "no", "excellent", "no"),
+    ("middle_aged", "high", "no", "fair", "yes"), ("senior", "medium", "no", "fair", "yes"),
+    ("senior", "low", "yes", "fair", "yes"), ("senior", "low", "yes", "excellent", "no"),
+    ("middle_aged", "low", "yes", "excellent", "yes"), ("youth", "medium", "no", "fair", "no"),
+    ("youth", "low", "yes", "fair", "yes"), ("senior", "medium", "yes", "fair", "yes"),
+    ("youth", "medium", "yes", "excellent", "yes"), ("middle_aged", "medium", "no", "excellent", "yes"),
+    ("middle_aged", "high", "yes", "fair", "yes"), ("senior", "medium", "no", "excellent", "no"),
+], columns=["age", "income", "student", "credit_rating", "buys_computer"])
+
+def test_lecture_example_allelectronic_gain():
+    """Khớp số liệu tính tay trong bài giảng: Info(D)=0.940, Gain(age)=0.246, ... và gốc là age."""
+    expected = {"age": 0.246, "income": 0.029, "student": 0.151, "credit_rating": 0.048}
+    for attr, g in expected.items():
+        gain, base, _ = information_gain(ALL_ELECTRONICS, attr, "buys_computer")
+        assert abs(base - 0.940) < 1e-3
+        assert abs(gain - g) < 1e-3, f"Gain({attr}) = {gain:.4f}, kỳ vọng {g}"
+    tree = ID3DecisionTree(attribute_order=["age", "income", "student", "credit_rating"],
+                           class_order=["no", "yes"])
+    tree.fit(ALL_ELECTRONICS, attributes=["age", "income", "student", "credit_rating"], target="buys_computer")
+    assert tree.root.attribute == "age"
+    assert tree.root.children["middle_aged"].is_leaf and tree.root.children["middle_aged"].prediction == "yes"
+    assert tree.root.children["youth"].attribute == "student"
+    assert tree.root.children["senior"].attribute == "credit_rating"
+
+def test_empty_branch_leaf_and_rules():
+    """Nhánh rỗng -> lá 0 mẫu mang nhãn đa số nút cha; get_rules() mặc định không tính lá này là luật."""
+    train = pd.DataFrame({
+        "x": ["a", "a", "a", "b", "b", "b"],
+        "y": ["p", "p", "q", "p", "p", "p"],
+        "class": ["acc", "acc", "unacc", "unacc", "unacc", "unacc"]
+    })
+    # Thêm mẫu (b, r): giá trị y = "r" có trong miền giá trị nhưng KHÔNG xuất hiện ở nhánh x = "a"
+    # -> khi nhánh x = "a" chia theo y sẽ sinh ra nhánh rỗng y = "r"
+    tree2 = ID3DecisionTree(attribute_order=["x", "y"])
+    train2 = pd.concat([train, pd.DataFrame({"x": ["b"], "y": ["r"], "class": ["unacc"]})], ignore_index=True)
+    tree2.fit(train2, attributes=["x", "y"], target="class")
+    node_a = tree2.root.children["a"]
+    assert node_a.attribute == "y"
+    empty = node_a.children["r"]
+    assert empty.is_leaf and empty.samples_count == 0
+    assert empty.prediction == node_a.majority_class == "acc"
+    stats = tree2.get_tree_stats()
+    assert stats["empty_leaves"] == 1
+    assert stats["rules_with_support"] == stats["leaf_nodes"] - 1
+    assert len(tree2.get_rules()) == stats["rules_with_support"]
+    assert len(tree2.get_rules(include_empty=True)) == stats["leaf_nodes"]
+    res = tree2.predict_with_path({"x": "a", "y": "r"})
+    assert res["is_empty_leaf"] is True and res["prediction"] == "acc"
 
 def test_multi_branch_tree_structure():
     """5. Tạo cây đa nhánh (multi-way split)."""

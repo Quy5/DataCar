@@ -6319,6 +6319,8 @@
     "total_nodes": 384,
     "leaf_nodes": 279,
     "decision_nodes": 105,
+    "empty_leaves": 27,
+    "rules_with_support": 252,
     "max_depth": 6,
     "root_attribute": "safety",
     "root_gain_table": {
@@ -6326,7 +6328,7 @@
       "maint": 0.07244083297806458,
       "doors": 0.002521980843318339,
       "persons": 0.21641380215297268,
-      "lug_boot": 0.03198267515180442,
+      "lug_boot": 0.031982675151804196,
       "safety": 0.26216177298296306
     }
   }

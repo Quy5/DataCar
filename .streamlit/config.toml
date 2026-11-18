@@ -1,0 +1,12 @@
+[client]
+# Ẩn nút Deploy và menu ⋮ (Rerun, Clear cache, Print, Record screen...)
+toolbarMode = "minimal"
+
+[ui]
+hideTopBar = true
+
+[theme]
+primaryColor = "#1D4ED8"
+
+[browser]
+gatherUsageStats = false

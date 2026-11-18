@@ -32,7 +32,7 @@ digraph ID3DecisionTree {
   n12 -> n14 [label=" 3 "];
   n14 [label="LÁ ID: 14\nKẾT QUẢ: ACC\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#FFE8CC", shape=ellipse];
   n12 -> n15 [label=" 4 "];
-  n15 [label="LÁ ID: 15\nKẾT QUẢ: ACC\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#FFE8CC", shape=ellipse];
+  n15 [label="LÁ ID: 15\nKẾT QUẢ: ACC\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#FFE8CC", shape=ellipse, style="dashed,filled"];
   n12 -> n16 [label=" 5more "];
   n16 [label="LÁ ID: 16\nKẾT QUẢ: VGOOD\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#D0E1FD", shape=ellipse];
   n10 -> n17 [label=" small "];
@@ -48,7 +48,7 @@ digraph ID3DecisionTree {
   n20 -> n22 [label=" 3 "];
   n22 [label="LÁ ID: 22\nKẾT QUẢ: GOOD\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#D4EDDA", shape=ellipse];
   n20 -> n23 [label=" 4 "];
-  n23 [label="LÁ ID: 23\nKẾT QUẢ: GOOD\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#D4EDDA", shape=ellipse];
+  n23 [label="LÁ ID: 23\nKẾT QUẢ: GOOD\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#D4EDDA", shape=ellipse, style="dashed,filled"];
   n20 -> n24 [label=" 5more "];
   n24 [label="LÁ ID: 24\nKẾT QUẢ: VGOOD\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#D0E1FD", shape=ellipse];
   n18 -> n25 [label=" small "];
@@ -88,7 +88,7 @@ digraph ID3DecisionTree {
   n39 -> n42 [label=" 4 "];
   n42 [label="LÁ ID: 42\nKẾT QUẢ: VGOOD\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#D0E1FD", shape=ellipse];
   n39 -> n43 [label=" 5more "];
-  n43 [label="LÁ ID: 43\nKẾT QUẢ: GOOD\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#D4EDDA", shape=ellipse];
+  n43 [label="LÁ ID: 43\nKẾT QUẢ: GOOD\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#D4EDDA", shape=ellipse, style="dashed,filled"];
   n37 -> n44 [label=" small "];
   n44 [label="LÁ ID: 44\nKẾT QUẢ: GOOD\nSố mẫu: 3\nEntropy: 0.000", fillcolor="#D4EDDA", shape=ellipse];
   n35 -> n45 [label=" med "];
@@ -100,7 +100,7 @@ digraph ID3DecisionTree {
   n47 -> n48 [label=" 2 "];
   n48 [label="LÁ ID: 48\nKẾT QUẢ: ACC\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#FFE8CC", shape=ellipse];
   n47 -> n49 [label=" 3 "];
-  n49 [label="LÁ ID: 49\nKẾT QUẢ: VGOOD\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#D0E1FD", shape=ellipse];
+  n49 [label="LÁ ID: 49\nKẾT QUẢ: VGOOD\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#D0E1FD", shape=ellipse, style="dashed,filled"];
   n47 -> n50 [label=" 4 "];
   n50 [label="LÁ ID: 50\nKẾT QUẢ: VGOOD\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#D0E1FD", shape=ellipse];
   n47 -> n51 [label=" 5more "];
@@ -186,7 +186,7 @@ digraph ID3DecisionTree {
   n89 -> n91 [label=" 3 "];
   n91 [label="LÁ ID: 91\nKẾT QUẢ: VGOOD\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#D0E1FD", shape=ellipse];
   n89 -> n92 [label=" 4 "];
-  n92 [label="LÁ ID: 92\nKẾT QUẢ: VGOOD\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#D0E1FD", shape=ellipse];
+  n92 [label="LÁ ID: 92\nKẾT QUẢ: VGOOD\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#D0E1FD", shape=ellipse, style="dashed,filled"];
   n89 -> n93 [label=" 5more "];
   n93 [label="LÁ ID: 93\nKẾT QUẢ: VGOOD\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#D0E1FD", shape=ellipse];
   n87 -> n94 [label=" small "];
@@ -222,7 +222,7 @@ digraph ID3DecisionTree {
   n106 -> n109 [label=" 4 "];
   n109 [label="LÁ ID: 109\nKẾT QUẢ: GOOD\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#D4EDDA", shape=ellipse];
   n106 -> n110 [label=" 5more "];
-  n110 [label="LÁ ID: 110\nKẾT QUẢ: GOOD\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#D4EDDA", shape=ellipse];
+  n110 [label="LÁ ID: 110\nKẾT QUẢ: GOOD\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#D4EDDA", shape=ellipse, style="dashed,filled"];
   n86 -> n111 [label=" med "];
   n111 [label="Nút ID: 111\nThuộc tính: lug_boot\nEntropy: 1.322\nMẫu: 11", fillcolor="#EBF4FF"];
   n111 -> n112 [label=" big "];
@@ -236,7 +236,7 @@ digraph ID3DecisionTree {
   n113 -> n116 [label=" 4 "];
   n116 [label="LÁ ID: 116\nKẾT QUẢ: VGOOD\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#D0E1FD", shape=ellipse];
   n113 -> n117 [label=" 5more "];
-  n117 [label="LÁ ID: 117\nKẾT QUẢ: VGOOD\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#D0E1FD", shape=ellipse];
+  n117 [label="LÁ ID: 117\nKẾT QUẢ: VGOOD\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#D0E1FD", shape=ellipse, style="dashed,filled"];
   n111 -> n118 [label=" small "];
   n118 [label="Nút ID: 118\nThuộc tính: doors\nEntropy: 0.811\nMẫu: 4", fillcolor="#EBF4FF"];
   n118 -> n119 [label=" 2 "];
@@ -290,7 +290,7 @@ digraph ID3DecisionTree {
   n142 -> n143 [label=" 2 "];
   n143 [label="LÁ ID: 143\nKẾT QUẢ: GOOD\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#D4EDDA", shape=ellipse];
   n142 -> n144 [label=" 3 "];
-  n144 [label="LÁ ID: 144\nKẾT QUẢ: VGOOD\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#D0E1FD", shape=ellipse];
+  n144 [label="LÁ ID: 144\nKẾT QUẢ: VGOOD\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#D0E1FD", shape=ellipse, style="dashed,filled"];
   n142 -> n145 [label=" 4 "];
   n145 [label="LÁ ID: 145\nKẾT QUẢ: VGOOD\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#D0E1FD", shape=ellipse];
   n142 -> n146 [label=" 5more "];
@@ -302,7 +302,7 @@ digraph ID3DecisionTree {
   n147 -> n149 [label=" 3 "];
   n149 [label="LÁ ID: 149\nKẾT QUẢ: GOOD\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#D4EDDA", shape=ellipse];
   n147 -> n150 [label=" 4 "];
-  n150 [label="LÁ ID: 150\nKẾT QUẢ: GOOD\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#D4EDDA", shape=ellipse];
+  n150 [label="LÁ ID: 150\nKẾT QUẢ: GOOD\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#D4EDDA", shape=ellipse, style="dashed,filled"];
   n147 -> n151 [label=" 5more "];
   n151 [label="LÁ ID: 151\nKẾT QUẢ: GOOD\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#D4EDDA", shape=ellipse];
   n131 -> n152 [label=" med "];
@@ -314,7 +314,7 @@ digraph ID3DecisionTree {
   n154 -> n155 [label=" 2 "];
   n155 [label="LÁ ID: 155\nKẾT QUẢ: ACC\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#FFE8CC", shape=ellipse];
   n154 -> n156 [label=" 3 "];
-  n156 [label="LÁ ID: 156\nKẾT QUẢ: VGOOD\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#D0E1FD", shape=ellipse];
+  n156 [label="LÁ ID: 156\nKẾT QUẢ: VGOOD\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#D0E1FD", shape=ellipse, style="dashed,filled"];
   n154 -> n157 [label=" 4 "];
   n157 [label="LÁ ID: 157\nKẾT QUẢ: VGOOD\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#D0E1FD", shape=ellipse];
   n154 -> n158 [label=" 5more "];
@@ -340,9 +340,9 @@ digraph ID3DecisionTree {
   n167 -> n168 [label=" 2 "];
   n168 [label="LÁ ID: 168\nKẾT QUẢ: UNACC\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#FFD6D6", shape=ellipse];
   n167 -> n169 [label=" 3 "];
-  n169 [label="LÁ ID: 169\nKẾT QUẢ: UNACC\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#FFD6D6", shape=ellipse];
+  n169 [label="LÁ ID: 169\nKẾT QUẢ: UNACC\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#FFD6D6", shape=ellipse, style="dashed,filled"];
   n167 -> n170 [label=" 4 "];
-  n170 [label="LÁ ID: 170\nKẾT QUẢ: UNACC\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#FFD6D6", shape=ellipse];
+  n170 [label="LÁ ID: 170\nKẾT QUẢ: UNACC\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#FFD6D6", shape=ellipse, style="dashed,filled"];
   n167 -> n171 [label=" 5more "];
   n171 [label="LÁ ID: 171\nKẾT QUẢ: ACC\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#FFE8CC", shape=ellipse];
   n59 -> n172 [label=" vhigh "];
@@ -414,7 +414,7 @@ digraph ID3DecisionTree {
   n204 -> n205 [label=" high "];
   n205 [label="LÁ ID: 205\nKẾT QUẢ: ACC\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#FFE8CC", shape=ellipse];
   n204 -> n206 [label=" low "];
-  n206 [label="LÁ ID: 206\nKẾT QUẢ: ACC\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#FFE8CC", shape=ellipse];
+  n206 [label="LÁ ID: 206\nKẾT QUẢ: ACC\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#FFE8CC", shape=ellipse, style="dashed,filled"];
   n204 -> n207 [label=" med "];
   n207 [label="LÁ ID: 207\nKẾT QUẢ: ACC\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#FFE8CC", shape=ellipse];
   n204 -> n208 [label=" vhigh "];
@@ -452,11 +452,11 @@ digraph ID3DecisionTree {
   n223 -> n224 [label=" 2 "];
   n224 [label="LÁ ID: 224\nKẾT QUẢ: ACC\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#FFE8CC", shape=ellipse];
   n223 -> n225 [label=" 3 "];
-  n225 [label="LÁ ID: 225\nKẾT QUẢ: ACC\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#FFE8CC", shape=ellipse];
+  n225 [label="LÁ ID: 225\nKẾT QUẢ: ACC\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#FFE8CC", shape=ellipse, style="dashed,filled"];
   n223 -> n226 [label=" 4 "];
   n226 [label="LÁ ID: 226\nKẾT QUẢ: GOOD\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#D4EDDA", shape=ellipse];
   n223 -> n227 [label=" 5more "];
-  n227 [label="LÁ ID: 227\nKẾT QUẢ: ACC\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#FFE8CC", shape=ellipse];
+  n227 [label="LÁ ID: 227\nKẾT QUẢ: ACC\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#FFE8CC", shape=ellipse, style="dashed,filled"];
   n221 -> n228 [label=" small "];
   n228 [label="LÁ ID: 228\nKẾT QUẢ: ACC\nSố mẫu: 4\nEntropy: 0.000", fillcolor="#FFE8CC", shape=ellipse];
   n211 -> n229 [label=" vhigh "];
@@ -484,13 +484,13 @@ digraph ID3DecisionTree {
   n238 -> n240 [label=" med "];
   n240 [label="Nút ID: 240\nThuộc tính: doors\nEntropy: 1.000\nMẫu: 2", fillcolor="#EBF4FF"];
   n240 -> n241 [label=" 2 "];
-  n241 [label="LÁ ID: 241\nKẾT QUẢ: UNACC\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#FFD6D6", shape=ellipse];
+  n241 [label="LÁ ID: 241\nKẾT QUẢ: UNACC\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#FFD6D6", shape=ellipse, style="dashed,filled"];
   n240 -> n242 [label=" 3 "];
   n242 [label="LÁ ID: 242\nKẾT QUẢ: UNACC\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#FFD6D6", shape=ellipse];
   n240 -> n243 [label=" 4 "];
   n243 [label="LÁ ID: 243\nKẾT QUẢ: ACC\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#FFE8CC", shape=ellipse];
   n240 -> n244 [label=" 5more "];
-  n244 [label="LÁ ID: 244\nKẾT QUẢ: UNACC\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#FFD6D6", shape=ellipse];
+  n244 [label="LÁ ID: 244\nKẾT QUẢ: UNACC\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#FFD6D6", shape=ellipse, style="dashed,filled"];
   n238 -> n245 [label=" small "];
   n245 [label="LÁ ID: 245\nKẾT QUẢ: UNACC\nSố mẫu: 4\nEntropy: 0.000", fillcolor="#FFD6D6", shape=ellipse];
   n237 -> n246 [label=" low "];
@@ -520,7 +520,7 @@ digraph ID3DecisionTree {
   n257 -> n258 [label=" 2 "];
   n258 [label="LÁ ID: 258\nKẾT QUẢ: UNACC\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#FFD6D6", shape=ellipse];
   n257 -> n259 [label=" 3 "];
-  n259 [label="LÁ ID: 259\nKẾT QUẢ: ACC\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#FFE8CC", shape=ellipse];
+  n259 [label="LÁ ID: 259\nKẾT QUẢ: ACC\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#FFE8CC", shape=ellipse, style="dashed,filled"];
   n257 -> n260 [label=" 4 "];
   n260 [label="LÁ ID: 260\nKẾT QUẢ: ACC\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#FFE8CC", shape=ellipse];
   n257 -> n261 [label=" 5more "];
@@ -542,7 +542,7 @@ digraph ID3DecisionTree {
   n267 -> n269 [label=" 3 "];
   n269 [label="LÁ ID: 269\nKẾT QUẢ: UNACC\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#FFD6D6", shape=ellipse];
   n267 -> n270 [label=" 4 "];
-  n270 [label="LÁ ID: 270\nKẾT QUẢ: UNACC\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#FFD6D6", shape=ellipse];
+  n270 [label="LÁ ID: 270\nKẾT QUẢ: UNACC\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#FFD6D6", shape=ellipse, style="dashed,filled"];
   n267 -> n271 [label=" 5more "];
   n271 [label="LÁ ID: 271\nKẾT QUẢ: ACC\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#FFE8CC", shape=ellipse];
   n265 -> n272 [label=" small "];
@@ -630,7 +630,7 @@ digraph ID3DecisionTree {
   n311 -> n313 [label=" 3 "];
   n313 [label="LÁ ID: 313\nKẾT QUẢ: GOOD\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#D4EDDA", shape=ellipse];
   n311 -> n314 [label=" 4 "];
-  n314 [label="LÁ ID: 314\nKẾT QUẢ: GOOD\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#D4EDDA", shape=ellipse];
+  n314 [label="LÁ ID: 314\nKẾT QUẢ: GOOD\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#D4EDDA", shape=ellipse, style="dashed,filled"];
   n311 -> n315 [label=" 5more "];
   n315 [label="LÁ ID: 315\nKẾT QUẢ: GOOD\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#D4EDDA", shape=ellipse];
   n309 -> n316 [label=" med "];
@@ -638,7 +638,7 @@ digraph ID3DecisionTree {
   n316 -> n317 [label=" 2 "];
   n317 [label="LÁ ID: 317\nKẾT QUẢ: ACC\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#FFE8CC", shape=ellipse];
   n316 -> n318 [label=" 3 "];
-  n318 [label="LÁ ID: 318\nKẾT QUẢ: GOOD\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#D4EDDA", shape=ellipse];
+  n318 [label="LÁ ID: 318\nKẾT QUẢ: GOOD\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#D4EDDA", shape=ellipse, style="dashed,filled"];
   n316 -> n319 [label=" 4 "];
   n319 [label="LÁ ID: 319\nKẾT QUẢ: GOOD\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#D4EDDA", shape=ellipse];
   n316 -> n320 [label=" 5more "];
@@ -652,7 +652,7 @@ digraph ID3DecisionTree {
   n322 -> n324 [label=" 3 "];
   n324 [label="Nút ID: 324\nThuộc tính: maint\nEntropy: 0.918\nMẫu: 3", fillcolor="#EBF4FF"];
   n324 -> n325 [label=" high "];
-  n325 [label="LÁ ID: 325\nKẾT QUẢ: ACC\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#FFE8CC", shape=ellipse];
+  n325 [label="LÁ ID: 325\nKẾT QUẢ: ACC\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#FFE8CC", shape=ellipse, style="dashed,filled"];
   n324 -> n326 [label=" low "];
   n326 [label="LÁ ID: 326\nKẾT QUẢ: ACC\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#FFE8CC", shape=ellipse];
   n324 -> n327 [label=" med "];
@@ -664,7 +664,7 @@ digraph ID3DecisionTree {
   n329 -> n330 [label=" high "];
   n330 [label="LÁ ID: 330\nKẾT QUẢ: ACC\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#FFE8CC", shape=ellipse];
   n329 -> n331 [label=" low "];
-  n331 [label="LÁ ID: 331\nKẾT QUẢ: ACC\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#FFE8CC", shape=ellipse];
+  n331 [label="LÁ ID: 331\nKẾT QUẢ: ACC\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#FFE8CC", shape=ellipse, style="dashed,filled"];
   n329 -> n332 [label=" med "];
   n332 [label="LÁ ID: 332\nKẾT QUẢ: ACC\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#FFE8CC", shape=ellipse];
   n329 -> n333 [label=" vhigh "];
@@ -702,7 +702,7 @@ digraph ID3DecisionTree {
   n346 -> n349 [label=" 4 "];
   n349 [label="LÁ ID: 349\nKẾT QUẢ: GOOD\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#D4EDDA", shape=ellipse];
   n346 -> n350 [label=" 5more "];
-  n350 [label="LÁ ID: 350\nKẾT QUẢ: GOOD\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#D4EDDA", shape=ellipse];
+  n350 [label="LÁ ID: 350\nKẾT QUẢ: GOOD\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#D4EDDA", shape=ellipse, style="dashed,filled"];
   n344 -> n351 [label=" small "];
   n351 [label="Nút ID: 351\nThuộc tính: doors\nEntropy: 0.811\nMẫu: 4", fillcolor="#EBF4FF"];
   n351 -> n352 [label=" 2 "];
@@ -736,7 +736,7 @@ digraph ID3DecisionTree {
   n363 -> n366 [label=" 4 "];
   n366 [label="LÁ ID: 366\nKẾT QUẢ: ACC\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#FFE8CC", shape=ellipse];
   n363 -> n367 [label=" 5more "];
-  n367 [label="LÁ ID: 367\nKẾT QUẢ: ACC\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#FFE8CC", shape=ellipse];
+  n367 [label="LÁ ID: 367\nKẾT QUẢ: ACC\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#FFE8CC", shape=ellipse, style="dashed,filled"];
   n361 -> n368 [label=" small "];
   n368 [label="LÁ ID: 368\nKẾT QUẢ: UNACC\nSố mẫu: 3\nEntropy: 0.000", fillcolor="#FFD6D6", shape=ellipse];
   n282 -> n369 [label=" vhigh "];
@@ -752,9 +752,9 @@ digraph ID3DecisionTree {
   n373 -> n374 [label=" 2 "];
   n374 [label="LÁ ID: 374\nKẾT QUẢ: UNACC\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#FFD6D6", shape=ellipse];
   n373 -> n375 [label=" 3 "];
-  n375 [label="LÁ ID: 375\nKẾT QUẢ: UNACC\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#FFD6D6", shape=ellipse];
+  n375 [label="LÁ ID: 375\nKẾT QUẢ: UNACC\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#FFD6D6", shape=ellipse, style="dashed,filled"];
   n373 -> n376 [label=" 4 "];
-  n376 [label="LÁ ID: 376\nKẾT QUẢ: UNACC\nSố mẫu: 0\nEntropy: 0.000", fillcolor="#FFD6D6", shape=ellipse];
+  n376 [label="LÁ ID: 376\nKẾT QUẢ: UNACC\nNhánh rỗng (0 mẫu)\nNhãn đa số của nút cha", fillcolor="#FFD6D6", shape=ellipse, style="dashed,filled"];
   n373 -> n377 [label=" 5more "];
   n377 [label="LÁ ID: 377\nKẾT QUẢ: ACC\nSố mẫu: 1\nEntropy: 0.000", fillcolor="#FFE8CC", shape=ellipse];
   n371 -> n378 [label=" small "];

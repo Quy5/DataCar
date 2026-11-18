@@ -1,5 +1,5 @@
 =================================================================
-CÂU TRÚC CÂY QUYẾT ĐỊNH ID3 (VĂN BẢN PHÂN CẤP)
+CẤU TRÚC CÂY QUYẾT ĐỊNH ID3 (VĂN BẢN PHÂN CẤP)
 =================================================================
 ROOT: [NÚT 0] Kiểm tra: 'safety' (Entropy: 1.205, Mẫu: 1382)
   └── [high] --> [NÚT 1] Kiểm tra: 'persons' (Entropy: 1.612, Mẫu: 470)

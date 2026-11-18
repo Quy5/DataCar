@@ -8,7 +8,10 @@ import json
 import pandas as pd
 from data_utils import load_data, validate_dataframe, split_data, FEATURE_COLUMNS, TARGET_COLUMN
 from id3 import ID3DecisionTree
-from evaluation import BaselineMajorityClassifier, evaluate_predictions, compare_models, analyze_errors
+from evaluation import (
+    BaselineMajorityClassifier, evaluate_predictions, compare_models, analyze_errors,
+    cross_validate_id3, analyze_empty_leaf_predictions
+)
 from visualization import (
     plot_class_distribution,
     plot_confusion_matrix,
@@ -94,6 +97,18 @@ def run_training_pipeline():
     for cls, m in id3_eval["per_class"].items():
         print(f"  - Lớp [{cls}]: Precision={m['precision']:.4f}, Recall={m['recall']:.4f}, F1={m['f1_score']:.4f}, Số mẫu test={m['support']}")
         
+    # 6b. Phân tích các mẫu test rơi vào lá của nhánh rỗng
+    empty_leaf = analyze_empty_leaf_predictions(id3_model, test_df, target=TARGET_COLUMN)
+    print(f"\n-> Mẫu test rơi vào lá nhánh rỗng: {empty_leaf['empty_leaf_samples']} "
+          f"(đúng {empty_leaf['empty_leaf_correct']}); chiếm {empty_leaf['errors_from_empty_leaves']}/"
+          f"{empty_leaf['total_errors']} lỗi trên tập test.")
+    
+    # 6c. Đánh giá chéo 10-fold phân tầng (bổ sung cho Hold-out)
+    print("\n[BƯỚC 6c] Đánh giá chéo 10-fold phân tầng trên toàn bộ dữ liệu...")
+    cv = cross_validate_id3(df, FEATURE_COLUMNS, TARGET_COLUMN, k=10, random_state=42)
+    print(f"-> Accuracy = {cv['accuracy_mean']:.4f} ± {cv['accuracy_std']:.4f} | "
+          f"Macro-F1 = {cv['macro_f1_mean']:.4f} ± {cv['macro_f1_std']:.4f}")
+    
     # 7. Xuất kết quả ra file
     print("\n[BƯỚC 7] Xuất báo cáo, biểu đồ và file mô hình ra thư mục output/...")
     
@@ -117,7 +132,9 @@ def run_training_pipeline():
         "tree_stats": stats,
         "id3_evaluation": id3_eval,
         "baseline_evaluation": base_eval,
-        "comparison_table": comparison["comparison_table"]
+        "comparison_table": comparison["comparison_table"],
+        "empty_leaf_analysis": empty_leaf,
+        "cross_validation": cv
     }
     with open(results_path, "w", encoding="utf-8") as f:
         json.dump(results_data, f, ensure_ascii=False, indent=2)

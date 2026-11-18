@@ -69,9 +69,22 @@ def test_train_test_split_no_leakage_and_stratified():
     assert len(train_df) == 16
     assert len(test_df) == 4
     
-    # Kiểm tra không trùng lặp dòng nếu index được giữ
     # Phân tầng: tỷ lệ unacc trong train và test tương đương nhau
     train_unacc = (train_df["class"] == "unacc").sum() / len(train_df)
     test_unacc = (test_df["class"] == "unacc").sum() / len(test_df)
     assert abs(train_unacc - (14/20)) < 0.1
+    assert abs(test_unacc - (14/20)) < 0.1
+
+def test_real_split_has_no_leakage():
+    """Trên dữ liệu thật (1.728 dòng, mỗi dòng là một tổ hợp duy nhất): không mẫu nào vừa ở train vừa ở test."""
+    import os
+    from data_utils import load_data
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "car.data")
+    if not os.path.exists(path):
+        pytest.skip("Chưa có data/car.data")
+    df = load_data(path)
+    train_df, test_df = split_data(df, test_size=0.2, random_state=42, stratify=True)
+    key = lambda d: set(map(tuple, d[FEATURE_COLUMNS].values.tolist()))
+    assert len(train_df) == 1382 and len(test_df) == 346
+    assert key(train_df).isdisjoint(key(test_df))
 

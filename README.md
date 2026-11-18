@@ -4,7 +4,7 @@
 > **Tên đề tài:** Phân loại mức độ phù hợp của ô tô bằng thuật toán ID3  
 > **Tên tiếng Anh:** *Car Acceptability Classification Using the ID3 Decision Tree Algorithm*  
 > **Thuật toán chính:** ID3 (Iterative Dichotomiser 3) tự cài đặt 100% bằng Python  
-> **Giao diện:** Streamlit Dashboard (Phong cách Modern AI Dashboard)  
+> **Giao diện:** Ứng dụng web Streamlit gồm 4 tab: Dự đoán, Cây ID3, Đánh giá, Dữ liệu  
 > **Bộ dữ liệu:** UCI Machine Learning Repository - Car Evaluation Dataset (1.728 mẫu)  
 
 ---
@@ -19,8 +19,8 @@ Trong quá trình lựa chọn và đánh giá chất lượng ô tô, người 
 ### 1.2. Mục tiêu nghiên cứu
 1. **Tự cài đặt trọn vẹn thuật toán ID3** bằng ngôn ngữ Python thuần, tuân thủ nguyên lý toán học của Ross Quinlan (Entropy, Information Gain, Multi-way split), **không sử dụng** `sklearn.tree.DecisionTreeClassifier`.
 2. **Khai phá và tiền xử lý** bộ dữ liệu chuẩn **Car Evaluation** từ UCI Machine Learning Repository (1.728 bản ghi, 6 thuộc tính danh mục, 4 nhãn phân loại).
-3. **Huấn luyện và đánh giá mô hình khoa học** trên tập kiểm thử độc lập (Train 80% / Test 20%, Stratified), so sánh với mô hình Baseline đối chứng.
-4. **Xây dựng ứng dụng web hiện đại (Streamlit Dashboard)** trực quan hóa cây quyết định, phân tích dữ liệu (EDA), cho phép người dùng nhập thông số và giải thích trực tiếp đường đi quyết định.
+3. **Huấn luyện và đánh giá mô hình khoa học** trên tập kiểm thử độc lập (Train 80% / Test 20%, Stratified), bổ sung đánh giá chéo 10-fold phân tầng, so sánh với mô hình Baseline đối chứng.
+4. **Xây dựng ứng dụng web (Streamlit)** cho phép chọn thông số xe và xem ngay nhãn dự đoán cùng đường đi trên cây; trực quan hóa cây, tập luật, kết quả đánh giá và dữ liệu.
 
 ---
 
@@ -59,7 +59,7 @@ Trong quá trình lựa chọn và đánh giá chất lượng ô tô, người 
 ```text
 KPDL_Nhom06_ID3_Car/
 │
-├── app.py                  # Ứng dụng Streamlit Dashboard giao diện trực quan
+├── app.py                  # Ứng dụng web Streamlit (4 tab: Dự đoán, Cây ID3, Đánh giá, Dữ liệu)
 ├── id3.py                  # Thuật toán ID3 tự cài đặt (Entropy, Gain, Tree, Predict)
 ├── data_utils.py           # Tiền xử lý, kiểm định dữ liệu, ánh xạ tiếng Việt
 ├── train.py                # Pipeline huấn luyện, đối chứng baseline và xuất kết quả
@@ -149,7 +149,7 @@ $$\text{Gain}(S, A) = \text{Entropy}(S) - \sum_{v \in \text{Values}(A)} \frac{|S
    python train.py
    ```
 
-6. **Khởi chạy giao diện Web Streamlit Dashboard:**
+6. **Khởi chạy ứng dụng web Streamlit:**
    ```bash
    python -m streamlit run app.py
    ```
@@ -159,22 +159,13 @@ $$\text{Gain}(S, A) = \text{Entropy}(S) - \sum_{v \in \text{Values}(A)} \frac{|S
 
 ## 6. KỊCH BẢN DEMO BÁO CÁO TRƯỚC GIẢNG VIÊN (5 - 7 PHÚT)
 
-Thành viên nhóm có thể tự tin thuyết minh theo 9 bước rõ ràng sau:
+Ứng dụng có 4 tab, mở vào là tab **Dự đoán**:
 
-- **Bước 1 (1 phút) – Giới thiệu tổng quan (Trang Dashboard):**  
-  Mở trang *Tổng quan*. Giới thiệu tên đề tài, nhóm thực hiện, các thông số cơ bản: 1.728 bản ghi, 6 thuộc tính, 4 nhãn phân loại, độ chính xác thực tế đạt được của ID3.
-- **Bước 2 (1 phút) – Khám phá dữ liệu (Trang EDA):**  
-  Chuyển sang trang *Khám phá dữ liệu*. Trình bày cấu trúc bảng, kiểm tra missing = 0, giải thích 6 đặc trưng kỹ thuật và sự mất cân bằng giữa 4 lớp (`unacc` chiếm 70%).
-- **Bước 3 (1 phút) – Cơ chế toán học ID3 (Trang Cây quyết định ID3):**  
-  Chuyển sang trang *Cây quyết định ID3*. Trình bày công thức Entropy, Information Gain. Chỉ ra bảng Information Gain tại nút gốc: thuộc tính `safety` có Gain cao nhất nên được chọn làm Nút Gốc (Root).
-- **Bước 4 (1 phút) – Trực quan hóa cây & Luật IF-THEN:**  
-  Kéo thanh slider xem sơ đồ cây ở độ sâu 2, 3 và trình bày một số luật suy diễn IF-THEN logic tiêu biểu (ví dụ: NẾU `safety = low` THÌ `class = unacc`).
-- **Bước 5 (1.5 phút) – Dự đoán tương tác thực tế (Trang Dự đoán ô tô):**  
-  Chuyển sang trang *Dự đoán mức độ phù hợp*. Bấm vào nút mẫu nhanh "Mẫu 1: Xe không phù hợp" và nhấn "PHÂN LOẠI Ô TÔ NGAY". Chỉ cho giảng viên thấy đường đi quyết định và giải thích lý do (do `safety = low`). Tiếp tục đổi sang "Mẫu 4: Xe Rất tốt" và quan sát kết quả `vgood` cùng đường đi suy diễn nhiều bước.
-- **Bước 6 (1 phút) – Đánh giá hiệu năng & Baseline (Trang Đánh giá mô hình):**  
-  Chuyển sang trang *Đánh giá mô hình*. Trình bày bảng so sánh với Baseline: ID3 vượt trội toàn diện, đặc biệt ở chỉ số **Macro-F1** (Baseline chỉ đạt ~0.20 do bỏ quên các lớp thiểu số, trong khi ID3 đạt điểm cân bằng cao). Giới thiệu ma trận nhầm lẫn (Confusion Matrix).
-- **Bước 7 (30 giây) – Kết luận & Hướng phát triển:**  
-  Nêu bật ưu điểm thuật toán tự lập trình 100%, khả năng giải thích minh bạch (Explainable AI), và hướng mở rộng (cắt tỉa cây C4.5/Random Forest).
+- **Bước 1 (1,5 phút) – Tab Dự đoán:** bấm ví dụ "Xe không phù hợp": cây dừng ngay ở bước "Mức độ an toàn: Thấp" (465 mẫu học). Bấm "Xe rất tốt": cây đi qua 5 thuộc tính rồi kết luận vgood. Đổi thử một thông số để thấy kết quả cập nhật ngay; dòng cuối cho biết nhãn gốc trong bộ dữ liệu để so sánh.
+- **Bước 2 (1 phút) – Ca kém tin cậy:** chọn Giá mua Rất cao, Bảo dưỡng Thấp, 3 cửa, Trên 4 người, Cốp Trung bình, An toàn Trung bình. Ứng dụng cảnh báo vì tập huấn luyện không có xe nào như vậy (lá không có mẫu học).
+- **Bước 3 (1,5 phút) – Tab Cây ID3:** biểu đồ Information Gain cho thấy `safety` lớn nhất nên làm nút gốc; kéo thanh "Số tầng hiển thị" lên 2–3 để xem cây; lọc luật IF–THEN theo kết luận.
+- **Bước 4 (1,5 phút) – Tab Đánh giá:** Accuracy 94,51% và Macro-F1 0,8975 so với mô hình luôn đoán unacc; 10-fold cho 92,94% ± 1,53%; ma trận nhầm lẫn; 12/19 lỗi rơi vào lá không có mẫu học.
+- **Bước 5 (30 giây) – Tab Dữ liệu:** 1.728 cấu hình, unacc chiếm 70% nên phải xem Macro-F1.
 
 ---
 
@@ -190,7 +181,7 @@ Thành viên nhóm có thể tự tin thuyết minh theo 9 bước rõ ràng sau
 | **Macro-Precision** | 0.1749 | **0.9094** | Độ chuẩn xác trung bình trên 4 lớp (**+0.7345**) |
 | **Thuộc tính Nút Gốc** | Không áp dụng | `safety` (Gain: 0.26216) | Mức độ an toàn là yếu tố quyết định cao nhất |
 | **Tổng số nút (Nodes)** | 1 | 384 nút | Cây đa nhánh phân tách hoàn chỉnh |
-| **Số nút lá (Leaves)** | 1 | 279 lá | Tương ứng 279 quy tắc phân loại độc lập |
+| **Số nút lá (Leaves)** | 1 | 279 lá | Gồm 252 lá có mẫu (= **252 luật IF-THEN**) và 27 lá của nhánh rỗng (0 mẫu huấn luyện) |
 | **Độ sâu lớn nhất (Depth)**| 0 | 6 tầng | Tối đa 6 thuộc tính trên một nhánh suy diễn |
 
 ### Chi tiết hiệu năng từng lớp của ID3 trên tập Test (346 mẫu):
@@ -198,6 +189,15 @@ Thành viên nhóm có thể tự tin thuyết minh theo 9 bước rõ ràng sau
 - **Lớp `acc` (77 mẫu test):** Precision = 89.47%, Recall = 88.31%, F1-Score = **88.89%**
 - **Lớp `good` (14 mẫu test):** Precision = 86.67%, Recall = 92.86%, F1-Score = **89.66%**
 - **Lớp `vgood` (13 mẫu test):** Precision = 90.91%, Recall = 76.92%, F1-Score = **83.33%**
+
+### Đánh giá chéo 10-fold phân tầng (toàn bộ 1.728 mẫu)
+- Accuracy = **0.9294 ± 0.0153**, Macro-F1 = **0.8455 ± 0.0550** (trung bình ± độ lệch chuẩn của 10 fold).
+- Kết quả Hold-out (0.9451) nằm trong khoảng dao động của 10-fold, cho thấy con số trên tập test không phải do may mắn khi chia dữ liệu.
+
+### Phân tích lỗi: lá của nhánh rỗng
+- Cây có 27 lá không có mẫu huấn luyện (tổ hợp thuộc tính không xuất hiện trong tập train); nhãn của các lá này lấy theo **nhãn đa số của nút cha** (khi hòa thì ưu tiên theo thứ tự `unacc > acc > good > vgood`).
+- Trên tập test có **27 mẫu** rơi vào các lá này, chỉ đúng **15/27 (55,6%)**, trong khi các mẫu còn lại đúng **312/319 (97,8%)**.
+- Như vậy **12/19 lỗi** của mô hình đến từ nhánh rỗng – hạn chế điển hình của ID3 khi dữ liệu học không phủ hết các tổ hợp. Giao diện web cảnh báo khi một dự đoán rơi vào lá loại này.
 
 ---
 

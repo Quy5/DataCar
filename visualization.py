@@ -186,13 +186,23 @@ def export_tree_to_dot(
         nid = f"n{node.node_id}"
         if node.is_leaf:
             color = class_colors.get(node.prediction, "#FFFFFF")
-            label = (
-                f"LÁ ID: {node.node_id}\\n"
-                f"KẾT QUẢ: {node.prediction.upper()}\\n"
-                f"Số mẫu: {node.samples_count}\\n"
-                f"Entropy: {node.entropy_val:.3f}"
-            )
-            lines.append(f'  {nid} [label="{label}", fillcolor="{color}", shape=ellipse];')
+            if node.samples_count == 0:
+                # Lá của nhánh rỗng: không có mẫu huấn luyện, nhãn lấy theo đa số nút cha
+                label = (
+                    f"LÁ ID: {node.node_id}\\n"
+                    f"KẾT QUẢ: {node.prediction.upper()}\\n"
+                    f"Nhánh rỗng (0 mẫu)\\n"
+                    f"Nhãn đa số của nút cha"
+                )
+                lines.append(f'  {nid} [label="{label}", fillcolor="{color}", shape=ellipse, style="dashed,filled"];')
+            else:
+                label = (
+                    f"LÁ ID: {node.node_id}\\n"
+                    f"KẾT QUẢ: {node.prediction.upper()}\\n"
+                    f"Số mẫu: {node.samples_count}\\n"
+                    f"Entropy: {node.entropy_val:.3f}"
+                )
+                lines.append(f'  {nid} [label="{label}", fillcolor="{color}", shape=ellipse];')
         else:
             # Nếu đạt max_depth thì hiển thị nút quyết định thu gọn
             if max_depth is not None and node.depth == max_depth:
@@ -244,7 +254,7 @@ def generate_text_tree(tree: ID3DecisionTree, max_depth: int = 4) -> str:
         
     lines = []
     lines.append("=" * 65)
-    lines.append("CÂU TRÚC CÂY QUYẾT ĐỊNH ID3 (VĂN BẢN PHÂN CẤP)")
+    lines.append("CẤU TRÚC CÂY QUYẾT ĐỊNH ID3 (VĂN BẢN PHÂN CẤP)")
     lines.append("=" * 65)
     
     def print_node(node: ID3Node, prefix: str = "", branch_label: str = ""):
@@ -254,7 +264,10 @@ def generate_text_tree(tree: ID3DecisionTree, max_depth: int = 4) -> str:
             branch_str = "ROOT: "
             
         if node.is_leaf:
-            lines.append(f"{prefix}{branch_str}[LÁ] DỰ ĐOÁN = {node.prediction.upper()} (Mẫu: {node.samples_count}, Entropy: {node.entropy_val:.3f})")
+            if node.samples_count == 0:
+                lines.append(f"{prefix}{branch_str}[LÁ - NHÁNH RỖNG] DỰ ĐOÁN = {node.prediction.upper()} (0 mẫu, lấy nhãn đa số của nút cha)")
+            else:
+                lines.append(f"{prefix}{branch_str}[LÁ] DỰ ĐOÁN = {node.prediction.upper()} (Mẫu: {node.samples_count}, Entropy: {node.entropy_val:.3f})")
             return
             
         if node.depth >= max_depth:

@@ -27,6 +27,8 @@
     "total_nodes": 384,
     "leaf_nodes": 279,
     "decision_nodes": 105,
+    "empty_leaves": 27,
+    "rules_with_support": 252,
     "max_depth": 6,
     "root_attribute": "safety",
     "root_gain_table": {
@@ -34,7 +36,7 @@
       "maint": 0.07244083297806458,
       "doors": 0.002521980843318339,
       "persons": 0.21641380215297268,
-      "lug_boot": 0.03198267515180442,
+      "lug_boot": 0.031982675151804196,
       "safety": 0.26216177298296306
     }
   },
@@ -215,5 +217,84 @@
       "ID3": "0.8333",
       "Chênh lệch": "+0.8333"
     }
-  ]
+  ],
+  "empty_leaf_analysis": {
+    "empty_leaf_samples": 27,
+    "empty_leaf_correct": 15,
+    "empty_leaf_accuracy": 0.5556,
+    "other_samples": 319,
+    "other_correct": 312,
+    "other_accuracy": 0.9781,
+    "total_errors": 19,
+    "errors_from_empty_leaves": 12
+  },
+  "cross_validation": {
+    "k": 10,
+    "folds": [
+      {
+        "fold": 1,
+        "test_samples": 173,
+        "accuracy": 0.9422,
+        "macro_f1": 0.8593
+      },
+      {
+        "fold": 2,
+        "test_samples": 173,
+        "accuracy": 0.896,
+        "macro_f1": 0.7937
+      },
+      {
+        "fold": 3,
+        "test_samples": 173,
+        "accuracy": 0.9249,
+        "macro_f1": 0.7842
+      },
+      {
+        "fold": 4,
+        "test_samples": 173,
+        "accuracy": 0.9249,
+        "macro_f1": 0.835
+      },
+      {
+        "fold": 5,
+        "test_samples": 173,
+        "accuracy": 0.9133,
+        "macro_f1": 0.7488
+      },
+      {
+        "fold": 6,
+        "test_samples": 173,
+        "accuracy": 0.9422,
+        "macro_f1": 0.8928
+      },
+      {
+        "fold": 7,
+        "test_samples": 173,
+        "accuracy": 0.9364,
+        "macro_f1": 0.8443
+      },
+      {
+        "fold": 8,
+        "test_samples": 173,
+        "accuracy": 0.9422,
+        "macro_f1": 0.899
+      },
+      {
+        "fold": 9,
+        "test_samples": 172,
+        "accuracy": 0.9419,
+        "macro_f1": 0.8859
+      },
+      {
+        "fold": 10,
+        "test_samples": 172,
+        "accuracy": 0.9302,
+        "macro_f1": 0.9117
+      }
+    ],
+    "accuracy_mean": 0.9294,
+    "accuracy_std": 0.0153,
+    "macro_f1_mean": 0.8455,
+    "macro_f1_std": 0.055
+  }
 }

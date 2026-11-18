@@ -414,13 +414,16 @@ class ID3DecisionTree:
                 "prediction": pred,
                 "entropy": curr.entropy_val,
                 "samples_count": curr.samples_count,
-                "class_distribution": curr.class_distribution
+                "class_distribution": curr.class_distribution,
+                # Lá rỗng: nhánh không có mẫu huấn luyện, nhãn lấy theo đa số của nút cha
+                "is_empty_leaf": curr.samples_count == 0
             })
             
         return {
             "prediction": pred,
             "is_fallback": is_fallback,
             "fallback_reason": fallback_reason,
+            "is_empty_leaf": (not is_fallback) and curr.samples_count == 0,
             "path": path,
             "leaf_node_id": curr.node_id
         }
@@ -432,15 +435,18 @@ class ID3DecisionTree:
             
         total_nodes = 0
         leaf_nodes = 0
+        empty_leaves = 0
         max_depth = 0
         
         def traverse(node: ID3Node):
-            nonlocal total_nodes, leaf_nodes, max_depth
+            nonlocal total_nodes, leaf_nodes, empty_leaves, max_depth
             total_nodes += 1
             if node.depth > max_depth:
                 max_depth = node.depth
             if node.is_leaf:
                 leaf_nodes += 1
+                if node.samples_count == 0:
+                    empty_leaves += 1
             else:
                 for child in node.children.values():
                     traverse(child)
@@ -450,24 +456,33 @@ class ID3DecisionTree:
             "total_nodes": total_nodes,
             "leaf_nodes": leaf_nodes,
             "decision_nodes": total_nodes - leaf_nodes,
+            "empty_leaves": empty_leaves,                     # lá của nhánh rỗng (0 mẫu huấn luyện)
+            "rules_with_support": leaf_nodes - empty_leaves,  # số luật IF-THEN có mẫu hỗ trợ
             "max_depth": max_depth,
             "root_attribute": self.root.attribute if not self.root.is_leaf else None,
             "root_gain_table": self.root.gain_table if self.root else {}
         }
 
-    def get_rules(self) -> List[Dict[str, Any]]:
-        """Xuất danh sách các quy tắc IF-THEN từ cây."""
+    def get_rules(self, include_empty: bool = False) -> List[Dict[str, Any]]:
+        """
+        Xuất danh sách các quy tắc IF-THEN từ cây.
+        Mặc định bỏ qua lá của nhánh rỗng (0 mẫu huấn luyện) vì đó không phải luật học từ dữ liệu.
+        include_empty=True để lấy cả các lá này.
+        """
         rules = []
         if self.root is None:
             return rules
             
         def extract(node: ID3Node, current_conditions: List[Tuple[str, str]]):
             if node.is_leaf:
+                if node.samples_count == 0 and not include_empty:
+                    return
                 rules.append({
                     "conditions": list(current_conditions),
                     "prediction": node.prediction,
                     "samples": node.samples_count,
-                    "entropy": node.entropy_val
+                    "entropy": node.entropy_val,
+                    "is_empty_leaf": node.samples_count == 0
                 })
             else:
                 for val, child in node.children.items():

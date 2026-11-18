@@ -57,15 +57,27 @@ Trong đó:
 - $\sum_{v} \frac{|S_v|}{|S|} \text{Entropy}(S_v)$: Entropy kỳ vọng có trọng số sau khi phân chia dữ liệu theo các giá trị của thuộc tính $A$.
 - $\text{Gain}(S, A)$ càng lớn thì việc phân chia dữ liệu theo thuộc tính $A$ càng giúp các tập con trở nên thuần nhất hơn.
 
+### 2.3. Đối chiếu ký hiệu với bài giảng
+
+Bài giảng "Phân lớp dữ liệu" dùng ký hiệu theo Han & Kamber; hai cách viết là tương đương:
+
+| Tài liệu này / code | Bài giảng | Ý nghĩa |
+|---|---|---|
+| $\text{Entropy}(S)$ | $Info(D) = -\sum_{i=1}^{m} p_i \log_2(p_i)$ | Entropy của tập dữ liệu |
+| $\sum_v \frac{\lvert S_v\rvert}{\lvert S\rvert}\text{Entropy}(S_v)$ | $Info_A(D) = \sum_{j=1}^{v} \frac{\lvert D_j\rvert}{\lvert D\rvert} Info(D_j)$ | Entropy sau khi chia theo A |
+| $\text{Gain}(S, A)$ | $Gain(A) = Info(D) - Info_A(D)$ | Độ lợi thông tin |
+
+Kiểm chứng với ví dụ AllElectronic trong bài giảng: $Info(D) = 0.940$, $Gain(age) = 0.246$, $Gain(income) = 0.029$, $Gain(student) = 0.151$, $Gain(credit\_rating) = 0.048$ → chọn `age` làm nút gốc. Test `test_lecture_example_allelectronic_gain` trong `tests/test_id3.py` kiểm tra đúng các số này.
+
 ---
 
-### 2.3. Điều kiện dừng thuật toán (Stopping Criteria)
+### 2.4. Điều kiện dừng thuật toán (Stopping Criteria)
 
 Một nút sẽ trở thành **nút lá (Leaf Node)** và dừng phân chia nếu rơi vào một trong các trường hợp sau:
 1. **Tất cả các mẫu cùng một nhãn:** $\text{Entropy}(S) = 0$. Gán nhãn lá bằng nhãn thuần nhất đó.
 2. **Không còn thuộc tính nào để phân chia:** Danh sách thuộc tính ứng viên rỗng. Gán nhãn lá bằng **nhãn đa số** (majority class) trong tập $S$.
 3. **Information Gain không đáng kể:** $\max_{A} \text{Gain}(S, A) \le \epsilon$ (với $\epsilon = 10^{-12}$). Phân chia không làm giảm độ hỗn loạn, dừng và gán nhãn đa số.
-4. **Nhánh con rỗng ($|S_v| = 0$):** Một giá trị danh mục $v$ của thuộc tính cha không có mẫu nào trong dữ liệu con. Gán nhãn lá bằng nhãn đa số của nút cha.
+4. **Nhánh con rỗng ($|S_v| = 0$):** Một giá trị danh mục $v$ của thuộc tính cha không có mẫu nào trong dữ liệu con. Gán nhãn lá bằng nhãn đa số của nút cha (khi hòa, ưu tiên theo thứ tự `unacc > acc > good > vgood`). Trên Car Evaluation, cây có 27 lá loại này; đây là nơi tập trung 12/19 lỗi trên tập test.
 
 ---
 
@@ -180,18 +192,20 @@ Do $\text{Gain}(S, \text{safety}) > \text{Gain}(S, \text{persons})$, thuật to�
 
 ### Bước 5: Ví dụ dự đoán bản ghi mới và đường đi quyết định
 
+*Ghi chú:* `id3.py` đánh số nút theo thứ tự duyệt sâu (DFS), các nhánh con được xét theo thứ tự chữ cái của giá trị (`high`, `low`, `med`; `2`, `4`, `more`). Vì vậy nhánh `safety = high` là Nút ID 1 và lá `persons = 4` bên dưới là Nút ID 3.
+
 Giả sử ta cần phân loại mẫu xe mới:  
 $\mathbf{x} = \{\text{safety: "high"}, \text{persons: "4"}\}$
 
 1. **Tại Nút Gốc (ID 0):**
    - Thuộc tính kiểm tra: `safety`
    - Giá trị của xe: `"high"`
-   - Thuộc tính tiếp theo: đi theo nhánh `"high"` tới Nút ID 2.
-2. **Tại Nút ID 2:**
+   - Thuộc tính tiếp theo: đi theo nhánh `"high"` tới Nút ID 1.
+2. **Tại Nút ID 1:**
    - Thuộc tính kiểm tra: `persons`
    - Giá trị của xe: `"4"`
-   - Thuộc tính tiếp theo: đi theo nhánh `"4"` tới Nút ID 5.
-3. **Tại Nút ID 5 (Nút lá):**
+   - Thuộc tính tiếp theo: đi theo nhánh `"4"` tới Nút ID 3.
+3. **Tại Nút ID 3 (Nút lá):**
    - Nhãn dự đoán: `vgood` (Rất tốt).
    - Giải thích: "Vì độ an toàn cao (safety = high) và sức chứa 4 người (persons = 4), mẫu xe đạt phân loại Rất tốt (vgood)."
 

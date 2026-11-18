@@ -1,0 +1,24 @@
+digraph ID3DecisionTree {
+  rankdir=TB;
+  node [fontname="Segoe UI, Arial", shape=box, style="rounded,filled", color="#1B365D", penwidth=1.5];
+  edge [fontname="Segoe UI, Arial", fontsize=10, color="#4A5568", penwidth=1.2];
+  n0 [label="Nút ID: 0\nThuộc tính: safety\nEntropy: 1.205\nMẫu: 1382", fillcolor="#EBF4FF"];
+  n0 -> n1 [label=" high "];
+  n1 [label="Nút ID: 1\nThuộc tính: persons\nEntropy: 1.612\nMẫu: 470", fillcolor="#EBF4FF"];
+  n1 -> n2 [label=" 2 "];
+  n2 [label="LÁ ID: 2\nKẾT QUẢ: UNACC\nSố mẫu: 157\nEntropy: 0.000", fillcolor="#FFD6D6", shape=ellipse];
+  n1 -> n3 [label=" 4 "];
+  n3 [label="Nút 3: buying\n(Thu gọn... N=150)\nĐa số: acc", fillcolor="#E2E8F0"];
+  n1 -> n59 [label=" more "];
+  n59 [label="Nút 59: buying\n(Thu gọn... N=163)\nĐa số: acc", fillcolor="#E2E8F0"];
+  n0 -> n191 [label=" low "];
+  n191 [label="LÁ ID: 191\nKẾT QUẢ: UNACC\nSố mẫu: 465\nEntropy: 0.000", fillcolor="#FFD6D6", shape=ellipse];
+  n0 -> n192 [label=" med "];
+  n192 [label="Nút ID: 192\nThuộc tính: persons\nEntropy: 1.220\nMẫu: 447", fillcolor="#EBF4FF"];
+  n192 -> n193 [label=" 2 "];
+  n193 [label="LÁ ID: 193\nKẾT QUẢ: UNACC\nSố mẫu: 145\nEntropy: 0.000", fillcolor="#FFD6D6", shape=ellipse];
+  n192 -> n194 [label=" 4 "];
+  n194 [label="Nút 194: buying\n(Thu gọn... N=150)\nĐa số: acc", fillcolor="#E2E8F0"];
+  n192 -> n282 [label=" more "];
+  n282 [label="Nút 282: buying\n(Thu gọn... N=152)\nĐa số: acc", fillcolor="#E2E8F0"];
+}

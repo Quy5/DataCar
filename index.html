@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phân loại ô tô bằng thuật toán ID3 - Nhóm 06</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --border: #E2E8F0;
+            --text-dark: #0F172A;
+            --text-muted: #64748B;
+            --primary: #0284C7;
+            --primary-hover: #0369A1;
+            --indigo: #2563EB;
+            --emerald: #10B981;
+            --amber: #D97706;
+            --rose: #E11D48;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            line-height: 1.5;
+            padding-bottom: 60px;
+        }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            background: #F1F5F9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .navbar {
+            background: #0F172A;
+            color: white;
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #1E293B;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 18px;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-logo {
+            background: linear-gradient(135deg, #0284C7, #2563EB);
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(16, 185, 129, 0.15);
+            color: #34D399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            background: #10B981;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #10B981;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 24px auto;
+            padding: 0 20px;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F2D59 100%);
+            padding: 32px 40px;
+            border-radius: 20px;
+            color: white;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-title {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .hero-subtitle {
+            font-size: 15px;
+            color: #94A3B8;
+            margin-top: 10px;
+            max-width: 900px;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #E2E8F0;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .kpi-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            transition: all 0.2s ease;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
+        }
+
+        .kpi-label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        .kpi-val {
+            font-size: 32px;
+            font-weight: 800;
+            margin-top: 8px;
+            color: var(--text-dark);
+        }
+
+        .kpi-sub {
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 6px;
+            padding: 2px 8px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .sub-green { background: #ECFDF5; color: #059669; }
+        .sub-blue { background: #EFF6FF; color: #2563EB; }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 24px;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+            margin-bottom: 24px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .presets-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .preset-btn {
+            background: #F1F5F9;
+            border: 1px solid #CBD5E1;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .preset-btn:hover {
+            background: #E2E8F0;
+            border-color: #94A3B8;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #334155;
+        }
+
+        .form-group select {
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid #CBD5E1;
+            font-size: 14px;
+            background: white;
+            font-family: inherit;
+            outline: none;
+            transition: border 0.2s;
+        }
+
+        .form-group select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(2, 132, 199, 0.4);
+        }
+
+        .result-box {
+            padding: 24px 28px;
+            border-radius: 16px;
+            color: white;
+            margin: 24px 0;
+            display: none;
+        }
+
+        .res-unacc { background: linear-gradient(135deg, #E11D48 0%, #9F1239 100%); }
+        .res-acc { background: linear-gradient(135deg, #D97706 0%, #92400E 100%); }
+        .res-good { background: linear-gradient(135deg, #059669 0%, #064E3B 100%); }
+        .res-vgood { background: linear-gradient(135deg, #2563EB 0%, #1E3A8A 100%); }
+
+        .timeline {
+            position: relative;
+            padding-left: 28px;
+            margin: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            bottom: 15px;
+            left: 11px;
+            width: 2px;
+            background: #CBD5E1;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 14px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -28px;
+            top: 4px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid #0EA5E9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: #0284C7;
+        }
+
+        .timeline-card {
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 13px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+
+        th, td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #E2E8F0;
+            text-align: left;
+        }
+
+        th {
+            background: #F8FAFC;
+            font-weight: 700;
+            color: #475569;
+        }
+
+        .img-card {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .img-card img {
+            max-width: 100%;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">
+            <div class="nav-logo">🚗</div>
+            <span>CAR EVALUATION • ID3 ALGORITHM</span>
+        </div>
+        <div class="status-pill">
+            <span class="status-dot"></span>
+            MÔ HÌNH SẴN SÀNG (ACCURACY: 94.51%)
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <div class="hero-banner">
+            <div class="hero-title">
+                <span>🚗</span>
+                <span>HỆ THỐNG PHÂN LOẠI Ô TÔ BẰNG THUẬT TOÁN ID3</span>
+            </div>
+            <div class="hero-subtitle">
+                Đồ án môn Khai phá dữ liệu • Nhóm 06 – Lớp QT01. Phân loại mức độ phù hợp của xe dựa trên 6 thuộc tính kỹ thuật với thuật toán cây quyết định ID3 tự lập trình từ dữ liệu UCI.
+            </div>
+            <div class="hero-tags">
+                <span class="tag">🧠 ID3 Decision Tree</span>
+                <span class="tag">📁 UCI Car Evaluation</span>
+                <span class="tag">⚡ Accuracy 94.51%</span>
+                <span class="tag">⚖️ Macro-F1 0.8975</span>
+                <span class="tag">👥 Nhóm 06 – QT01</span>
+            </div>
+        </div>
+
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-label">Tổng số mẫu xe</div>
+                <div class="kpi-val">1.728</div>
+                <div class="kpi-sub sub-blue">UCI Dataset (100% sạch)</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Số đặc trưng đầu vào</div>
+                <div class="kpi-val">6</div>
+                <div class="kpi-sub sub-blue">Thuộc tính danh mục</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Độ chính xác Test Set</div>
+                <div class="kpi-val" style="color: #059669;">94.51%</div>
+                <div class="kpi-sub sub-green">↑ +24.57% so với Baseline</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Macro-F1 Score</div>
+                <div class="kpi-val" style="color: #0284C7;">0.8975</div>
+                <div class="kpi-sub sub-blue">Đa lớp cân bằng</div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab(event, 'tab-predict')">🚗 Dự đoán mức độ phù hợp</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-tree')">🌳 Cây quyết định ID3</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-eval')">📈 Đánh giá & So sánh Baseline</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-eda')">📊 Khám phá dữ liệu (EDA)</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-about')">ℹ️ Giới thiệu đề tài</button>
+        </div>
+
+        <!-- TAB 1: DỰ ĐOÁN Ô TÔ -->
+        <div id="tab-predict" class="tab-content active">
+            <div class="card">
+                <div class="card-title">⚡ Chọn nhanh mẫu thử nghiệm điển hình:</div>
+                <div class="presets-row">
+                    <button class="preset-btn" onclick="applyPreset('vhigh', 'vhigh', '2', '2', 'small', 'low')">🔴 Mẫu 1: Xe không phù hợp (unacc)</button>
+                    <button class="preset-btn" onclick="applyPreset('med', 'med', '4', '4', 'med', 'med')">🟠 Mẫu 2: Xe chấp nhận được (acc)</button>
+                    <button class="preset-btn" onclick="applyPreset('low', 'low', '4', '4', 'big', 'med')">🟢 Mẫu 3: Xe chất lượng Tốt (good)</button>
+                    <button class="preset-btn" onclick="applyPreset('low', 'low', '4', '4', 'big', 'high')">🔵 Mẫu 4: Xe Rất tốt (vgood)</button>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>1. Giá mua xe ban đầu (buying):</label>
+                        <select id="sel-buying">
+                            <option value="vhigh">Rất cao (vhigh)</option>
+                            <option value="high">Cao (high)</option>
+                            <option value="med" selected>Trung bình (med)</option>
+                            <option value="low">Thấp (low)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>2. Chi phí bảo dưỡng định kỳ (maint):</label>
+                        <select id="sel-maint">
+                            <option value="vhigh">Rất cao (vhigh)</option>
+                            <option value="high">Cao (high)</option>
+                            <option value="med" selected>Trung bình (med)</option>
+                            <option value="low">Thấp (low)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>3. Số cửa xe (doors):</label>
+                        <select id="sel-doors">
+                            <option value="2">2 cửa (2)</option>
+                            <option value="3">3 cửa (3)</option>
+                            <option value="4" selected>4 cửa (4)</option>
+                            <option value="5more">Từ 5 cửa trở lên (5more)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>4. Sức chứa hành khách (persons):</label>
+                        <select id="sel-persons">
+                            <option value="2">2 người (2)</option>
+                            <option value="4" selected>4 người (4)</option>
+                            <option value="more">Trên 4 người (more)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>5. Khoang hành lý (lug_boot):</label>
+                        <select id="sel-lug_boot">
+                            <option value="small">Nhỏ (small)</option>
+                            <option value="med" selected>Trung bình (med)</option>
+                            <option value="big">Lớn (big)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>6. Mức độ an toàn ước tính (safety):</label>
+                        <select id="sel-safety">
+                            <option value="low">Thấp (low)</option>
+                            <option value="med">Trung bình (med)</option>
+                            <option value="high" selected>Cao (high)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="btn-submit" onclick="predictCar()">🚀 PHÂN LOẠI Ô TÔ NGAY VỚI MÔ HÌNH ID3</button>
+
+                <div id="result-box" class="result-box">
+                    <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9;">KẾT QUẢ DỰ ĐOÁN TỪ CÂY QUYẾT ĐỊNH ID3</div>
+                    <div id="res-class-name" style="font-size: 32px; font-weight: 800; margin-top: 4px;"></div>
+                    <div id="res-desc" style="font-size: 14px; margin-top: 6px; opacity: 0.95;"></div>
+                </div>
+
+                <div id="path-section" style="display: none; margin-top: 24px;">
+                    <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 12px;">🔍 Quá trình suy diễn logic từng bước từ Cây quyết định:</h3>
+                    <div id="timeline-list" class="timeline"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: CÂY QUYẾT ĐỊNH ID3 -->
+        <div id="tab-tree" class="tab-content">
+            <div class="card">
+                <div class="card-title">1. Bảng xếp hạng Information Gain tại Nút Gốc (Root Node)</div>
+                <p style="color: var(--text-muted); font-size: 14px;">Tại nút gốc (1.382 mẫu Train), ID3 tính Entropy và Information Gain của cả 6 thuộc tính để chọn thuộc tính phân tách tối ưu nhất:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Xếp hạng</th>
+                            <th>Thuộc tính</th>
+                            <th>Ý nghĩa</th>
+                            <th>Information Gain (bits)</th>
+                            <th>Được chọn làm Nút Gốc</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #F0FDF4; font-weight: 700;">
+                            <td>#1</td>
+                            <td>safety</td>
+                            <td>Mức độ an toàn</td>
+                            <td>0.26216</td>
+                            <td>⭐ CÓ (Gain lớn nhất)</td>
+                        </tr>
+                        <tr>
+                            <td>#2</td>
+                            <td>persons</td>
+                            <td>Sức chứa người</td>
+                            <td>0.21641</td>
+                            <td>Không</td>
+                        </tr>
+                        <tr>
+                            <td>#3</td>
+                            <td>buying</td>
+                            <td>Giá mua xe</td>
+                            <td>0.10196</td>
+                            <td>Không</td>
+                        </tr>
+                        <tr>
+                            <td>#4</td>
+                            <td>maint</td>
+                            <td>Chi phí bảo dưỡng</td>
+                            <td>0.07244</td>
+                            <td>Không</td>
+                        </tr>
+                        <tr>
+                            <td>#5</td>
+                            <td>lug_boot</td>
+                            <td>Khoang hành lý</td>
+                            <td>0.03198</td>
+                            <td>Không</td>
+                        </tr>
+                        <tr>
+                            <td>#6</td>
+                            <td>doors</td>
+                            <td>Số cửa xe</td>
+                            <td>0.00252</td>
+                            <td>Không</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="img-card">
+                    <img src="output/root_information_gain.png" alt="Root Information Gain" onerror="this.style.display='none'">
+                </div>
+
+                <div class="card-title" style="margin-top: 24px;">2. Cấu trúc cây quyết định đã huấn luyện</div>
+                <p style="color: var(--text-muted); font-size: 14px;">Mô hình có tổng cộng <strong>384 nút</strong>, gồm <strong>279 nút lá</strong> và độ sâu lớn nhất là <strong>6 tầng</strong>. Nút gốc bắt đầu bằng việc kiểm tra <code>safety</code>.</p>
+            </div>
+        </div>
+
+        <!-- TAB 3: ĐÁNH GIÁ MÔ HÌNH -->
+        <div id="tab-eval" class="tab-content">
+            <div class="card">
+                <div class="card-title">1. Bảng so sánh ID3 vs Mô hình Baseline đối chứng (Majority Classifier)</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Chỉ số (Metric)</th>
+                            <th>Baseline (Majority)</th>
+                            <th>Cây quyết định ID3 (Nhóm 06)</th>
+                            <th>Chênh lệch</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Độ chính xác (Accuracy)</strong></td>
+                            <td>69.94%</td>
+                            <td><strong style="color: #059669;">94.51%</strong></td>
+                            <td><strong style="color: #059669;">+24.57%</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Macro-F1 Score</strong></td>
+                            <td>0.2058</td>
+                            <td><strong style="color: #0284C7;">0.8975</strong></td>
+                            <td><strong style="color: #0284C7;">+0.6917</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Macro-Recall</strong></td>
+                            <td>0.2500</td>
+                            <td>0.8890</td>
+                            <td>+0.6390</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Macro-Precision</strong></td>
+                            <td>0.1749</td>
+                            <td>0.9094</td>
+                            <td>+0.7345</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-top: 24px;">
+                    <div class="img-card">
+                        <h4 style="font-size: 14px; margin-bottom: 8px;">Ma trận nhầm lẫn (Confusion Matrix)</h4>
+                        <img src="output/confusion_matrix.png" alt="Confusion Matrix" onerror="this.style.display='none'">
+                    </div>
+                    <div class="img-card">
+                        <h4 style="font-size: 14px; margin-bottom: 8px;">So sánh Baseline vs ID3</h4>
+                        <img src="output/model_comparison.png" alt="Model Comparison" onerror="this.style.display='none'">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: EDA -->
+        <div id="tab-eda" class="tab-content">
+            <div class="card">
+                <div class="card-title">Phân tích bộ dữ liệu Car Evaluation (UCI)</div>
+                <p style="color: var(--text-muted); font-size: 14px;">Bộ dữ liệu gồm 1.728 mẫu xe được khảo sát không có giá trị thiếu. Dưới đây là phân bố 4 mức độ phù hợp:</p>
+                <div class="img-card">
+                    <img src="output/class_distribution.png" alt="Class Distribution" onerror="this.style.display='none'">
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: ABOUT -->
+        <div id="tab-about" class="tab-content">
+            <div class="card">
+                <div class="card-title">Thông tin Đề tài & Nhóm nghiên cứu</div>
+                <p><strong>Môn học:</strong> Khai phá dữ liệu (Data Mining)</p>
+                <p><strong>Nhóm thực hiện:</strong> Nhóm 06 – Lớp QT01</p>
+                <p><strong>Đề tài:</strong> Phân loại mức độ phù hợp của ô tô bằng thuật toán ID3 (Car Acceptability Classification Using ID3)</p>
+                <p><strong>Nguồn dữ liệu:</strong> UCI Machine Learning Repository - Car Evaluation (Marko Bohanec, Vladislav Rajkovič)</p>
+                <p><strong>Thuật toán:</strong> Iterative Dichotomiser 3 (ID3) tự lập trình 100% bằng Python thuần.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let cachedModel = null;
+
+        // Tự động tải model.json khi mở trang
+        fetch('output/model.json')
+            .then(res => res.json())
+            .then(data => { cachedModel = data.tree; })
+            .catch(err => console.log('Sử dụng API backend cho dự đoán.'));
+
+        function switchTab(e, tabId) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            e.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function applyPreset(b, m, d, p, l, s) {
+            document.getElementById('sel-buying').value = b;
+            document.getElementById('sel-maint').value = m;
+            document.getElementById('sel-doors').value = d;
+            document.getElementById('sel-persons').value = p;
+            document.getElementById('sel-lug_boot').value = l;
+            document.getElementById('sel-safety').value = s;
+            predictCar();
+        }
+
+        const classInfo = {
+            'unacc': { name: 'Không phù hợp (unacc)', desc: 'Xe không đáp ứng các tiêu chuẩn cơ bản hoặc tính an toàn/chi phí không phù hợp.', cls: 'res-unacc' },
+            'acc': { name: 'Chấp nhận được (acc)', desc: 'Xe đáp ứng các yêu cầu tối thiểu về an toàn và tiện ích ở mức cơ bản.', cls: 'res-acc' },
+            'good': { name: 'Tốt (good)', desc: 'Xe có các thông số tốt về chi phí, an toàn và độ tiện dụng.', cls: 'res-good' },
+            'vgood': { name: 'Rất tốt (vgood)', desc: 'Xe có độ an toàn cao, chi phí hợp lý và đáp ứng tối đa mọi tiêu chuẩn.', cls: 'res-vgood' }
+        };
+
+        const attrNames = {
+            'buying': 'Giá mua xe',
+            'maint': 'Chi phí bảo dưỡng',
+            'doors': 'Số cửa',
+            'persons': 'Sức chứa người',
+            'lug_boot': 'Khoang hành lý',
+            'safety': 'Độ an toàn'
+        };
+
+        function traverseTreeJS(node, sample) {
+            let curr = node;
+            let path = [];
+            while (!curr.is_leaf) {
+                let attr = curr.attribute;
+                let val = String(sample[attr] || '');
+                path.push({
+                    node_id: curr.node_id,
+                    attribute: attr,
+                    checked_value: val,
+                    entropy: curr.entropy || 0,
+                    samples_count: curr.samples_count || 0
+                });
+                if (curr.children && curr.children[val]) {
+                    curr = curr.children[val];
+                } else {
+                    return { prediction: curr.majority_class || 'unacc', path: path, is_fallback: true };
+                }
+            }
+            path.push({
+                node_id: curr.node_id,
+                is_leaf: true,
+                prediction: curr.prediction,
+                entropy: curr.entropy || 0,
+                samples_count: curr.samples_count || 0
+            });
+            return { prediction: curr.prediction, path: path, is_fallback: false };
+        }
+
+        async function predictCar() {
+            const sample = {
+                buying: document.getElementById('sel-buying').value,
+                maint: document.getElementById('sel-maint').value,
+                doors: document.getElementById('sel-doors').value,
+                persons: document.getElementById('sel-persons').value,
+                lug_boot: document.getElementById('sel-lug_boot').value,
+                safety: document.getElementById('sel-safety').value
+            };
+
+            let resData = null;
+
+            if (cachedModel) {
+                resData = traverseTreeJS(cachedModel, sample);
+            } else {
+                try {
+                    const resp = await fetch('/api/predict', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(sample)
+                    });
+                    resData = await resp.json();
+                } catch (e) {
+                    alert('Lỗi khi kết nối mô hình.');
+                    return;
+                }
+            }
+
+            renderResult(resData);
+        }
+
+        function renderResult(data) {
+            const pred = data.prediction;
+            const info = classInfo[pred] || { name: pred, desc: '', cls: 'res-unacc' };
+
+            const rBox = document.getElementById('result-box');
+            rBox.className = 'result-box ' + info.cls;
+            document.getElementById('res-class-name').innerText = info.name.toUpperCase();
+            document.getElementById('res-desc').innerText = info.desc;
+            rBox.style.display = 'block';
+
+            const pSection = document.getElementById('path-section');
+            const tList = document.getElementById('timeline-list');
+            tList.innerHTML = '';
+
+            data.path.forEach((step, idx) => {
+                if (!step.is_leaf) {
+                    const attrVi = attrNames[step.attribute] || step.attribute;
+                    tList.innerHTML += `
+                        <div class="timeline-item">
+                            <div class="timeline-dot">${idx + 1}</div>
+                            <div class="timeline-card">
+                                <strong>Bước ${idx + 1} (Nút ID: ${step.node_id}):</strong> Kiểm tra thuộc tính <code>${step.attribute}</code> (${attrVi})<br>
+                                👉 Giá trị xe: <strong>${step.checked_value}</strong> • Entropy: <code>${Number(step.entropy).toFixed(3)}</code> • Số mẫu: <code>${step.samples_count}</code>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    tList.innerHTML += `
+                        <div class="timeline-item">
+                            <div class="timeline-dot" style="background: #10B981; border-color: #10B981; color: white;">🏁</div>
+                            <div class="timeline-card" style="border-left: 4px solid #10B981; background: #F0FDF4;">
+                                <strong>KẾT LUẬN (Nút lá ID: ${step.node_id}):</strong> Phân loại = <strong style="color: #065F46;">${info.name.toUpperCase()}</strong><br>
+                                Thỏa mãn điều kiện dừng với Entropy: <code>${Number(step.entropy).toFixed(3)}</code> và ${step.samples_count} mẫu ủng hộ.
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            pSection.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

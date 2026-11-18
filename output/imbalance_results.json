@@ -1,0 +1,125 @@
+{
+  "Giữ nguyên": {
+    "train_size": 1382,
+    "holdout": {
+      "accuracy": 0.9451,
+      "macro_f1": 0.8975,
+      "confusion_matrix": [
+        [
+          236,
+          6,
+          0,
+          0
+        ],
+        [
+          8,
+          68,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          13,
+          0
+        ],
+        [
+          0,
+          1,
+          2,
+          10
+        ]
+      ]
+    },
+    "cv10": {
+      "accuracy_mean": 0.9294,
+      "accuracy_std": 0.0153,
+      "macro_f1_mean": 0.8455,
+      "macro_f1_std": 0.055,
+      "recall_good": 0.7833,
+      "recall_vgood": 0.7976
+    }
+  },
+  "Random Oversampling": {
+    "train_size": 3872,
+    "holdout": {
+      "accuracy": 0.9075,
+      "macro_f1": 0.822,
+      "confusion_matrix": [
+        [
+          223,
+          12,
+          5,
+          2
+        ],
+        [
+          5,
+          68,
+          1,
+          3
+        ],
+        [
+          1,
+          0,
+          13,
+          0
+        ],
+        [
+          2,
+          0,
+          1,
+          10
+        ]
+      ]
+    },
+    "cv10": {
+      "accuracy_mean": 0.9236,
+      "accuracy_std": 0.0266,
+      "macro_f1_mean": 0.8575,
+      "macro_f1_std": 0.0451,
+      "recall_good": 0.8714,
+      "recall_vgood": 0.8928
+    }
+  },
+  "Random Undersampling": {
+    "train_size": 208,
+    "holdout": {
+      "accuracy": 0.6792,
+      "macro_f1": 0.6269,
+      "confusion_matrix": [
+        [
+          154,
+          70,
+          10,
+          8
+        ],
+        [
+          7,
+          55,
+          9,
+          6
+        ],
+        [
+          0,
+          0,
+          14,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          12
+        ]
+      ]
+    },
+    "cv10": {
+      "accuracy_mean": 0.7674,
+      "accuracy_std": 0.043,
+      "macro_f1_mean": 0.6761,
+      "macro_f1_std": 0.0491,
+      "recall_good": 0.9428,
+      "recall_vgood": 0.9071
+    }
+  }
+}

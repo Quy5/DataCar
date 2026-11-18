@@ -1,0 +1,300 @@
+{
+  "dataset": {
+    "name": "Car Evaluation (UCI)",
+    "total_samples": 1728,
+    "train_samples": 1382,
+    "test_samples": 346,
+    "class_distribution_all": {
+      "unacc": 1210,
+      "acc": 384,
+      "good": 69,
+      "vgood": 65
+    },
+    "class_distribution_train": {
+      "unacc": 968,
+      "acc": 307,
+      "good": 55,
+      "vgood": 52
+    },
+    "class_distribution_test": {
+      "unacc": 242,
+      "acc": 77,
+      "good": 14,
+      "vgood": 13
+    }
+  },
+  "tree_stats": {
+    "total_nodes": 384,
+    "leaf_nodes": 279,
+    "decision_nodes": 105,
+    "empty_leaves": 27,
+    "rules_with_support": 252,
+    "max_depth": 6,
+    "root_attribute": "safety",
+    "root_gain_table": {
+      "buying": 0.10196390453637427,
+      "maint": 0.07244083297806458,
+      "doors": 0.002521980843318339,
+      "persons": 0.21641380215297268,
+      "lug_boot": 0.031982675151804196,
+      "safety": 0.26216177298296306
+    }
+  },
+  "id3_evaluation": {
+    "accuracy": 0.9451,
+    "macro_precision": 0.9094,
+    "macro_recall": 0.889,
+    "macro_f1": 0.8975,
+    "weighted_precision": 0.9448,
+    "weighted_recall": 0.9451,
+    "weighted_f1": 0.9447,
+    "per_class": {
+      "unacc": {
+        "precision": 0.9672,
+        "recall": 0.9752,
+        "f1_score": 0.9712,
+        "support": 242
+      },
+      "acc": {
+        "precision": 0.8947,
+        "recall": 0.8831,
+        "f1_score": 0.8889,
+        "support": 77
+      },
+      "good": {
+        "precision": 0.8667,
+        "recall": 0.9286,
+        "f1_score": 0.8966,
+        "support": 14
+      },
+      "vgood": {
+        "precision": 0.9091,
+        "recall": 0.7692,
+        "f1_score": 0.8333,
+        "support": 13
+      }
+    },
+    "confusion_matrix": [
+      [
+        236,
+        6,
+        0,
+        0
+      ],
+      [
+        8,
+        68,
+        0,
+        1
+      ],
+      [
+        0,
+        1,
+        13,
+        0
+      ],
+      [
+        0,
+        1,
+        2,
+        10
+      ]
+    ],
+    "labels": [
+      "unacc",
+      "acc",
+      "good",
+      "vgood"
+    ]
+  },
+  "baseline_evaluation": {
+    "accuracy": 0.6994,
+    "macro_precision": 0.1749,
+    "macro_recall": 0.25,
+    "macro_f1": 0.2058,
+    "weighted_precision": 0.4892,
+    "weighted_recall": 0.6994,
+    "weighted_f1": 0.5757,
+    "per_class": {
+      "unacc": {
+        "precision": 0.6994,
+        "recall": 1.0,
+        "f1_score": 0.8231,
+        "support": 242
+      },
+      "acc": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1_score": 0.0,
+        "support": 77
+      },
+      "good": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1_score": 0.0,
+        "support": 14
+      },
+      "vgood": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1_score": 0.0,
+        "support": 13
+      }
+    },
+    "confusion_matrix": [
+      [
+        242,
+        0,
+        0,
+        0
+      ],
+      [
+        77,
+        0,
+        0,
+        0
+      ],
+      [
+        14,
+        0,
+        0,
+        0
+      ],
+      [
+        13,
+        0,
+        0,
+        0
+      ]
+    ],
+    "labels": [
+      "unacc",
+      "acc",
+      "good",
+      "vgood"
+    ]
+  },
+  "comparison_table": [
+    {
+      "Metric": "Độ chính xác (Accuracy)",
+      "Baseline": "0.6994 (69.94%)",
+      "ID3": "0.9451 (94.51%)",
+      "Chênh lệch": "+24.57%"
+    },
+    {
+      "Metric": "Macro-F1",
+      "Baseline": "0.2058",
+      "ID3": "0.8975",
+      "Chênh lệch": "+0.6917"
+    },
+    {
+      "Metric": "Macro-Recall",
+      "Baseline": "0.2500",
+      "ID3": "0.8890",
+      "Chênh lệch": "+0.6390"
+    },
+    {
+      "Metric": "F1-score lớp [unacc]",
+      "Baseline": "0.8231",
+      "ID3": "0.9712",
+      "Chênh lệch": "+0.1481"
+    },
+    {
+      "Metric": "F1-score lớp [acc]",
+      "Baseline": "0.0000",
+      "ID3": "0.8889",
+      "Chênh lệch": "+0.8889"
+    },
+    {
+      "Metric": "F1-score lớp [good]",
+      "Baseline": "0.0000",
+      "ID3": "0.8966",
+      "Chênh lệch": "+0.8966"
+    },
+    {
+      "Metric": "F1-score lớp [vgood]",
+      "Baseline": "0.0000",
+      "ID3": "0.8333",
+      "Chênh lệch": "+0.8333"
+    }
+  ],
+  "empty_leaf_analysis": {
+    "empty_leaf_samples": 27,
+    "empty_leaf_correct": 15,
+    "empty_leaf_accuracy": 0.5556,
+    "other_samples": 319,
+    "other_correct": 312,
+    "other_accuracy": 0.9781,
+    "total_errors": 19,
+    "errors_from_empty_leaves": 12
+  },
+  "cross_validation": {
+    "k": 10,
+    "folds": [
+      {
+        "fold": 1,
+        "test_samples": 173,
+        "accuracy": 0.9422,
+        "macro_f1": 0.8593
+      },
+      {
+        "fold": 2,
+        "test_samples": 173,
+        "accuracy": 0.896,
+        "macro_f1": 0.7937
+      },
+      {
+        "fold": 3,
+        "test_samples": 173,
+        "accuracy": 0.9249,
+        "macro_f1": 0.7842
+      },
+      {
+        "fold": 4,
+        "test_samples": 173,
+        "accuracy": 0.9249,
+        "macro_f1": 0.835
+      },
+      {
+        "fold": 5,
+        "test_samples": 173,
+        "accuracy": 0.9133,
+        "macro_f1": 0.7488
+      },
+      {
+        "fold": 6,
+        "test_samples": 173,
+        "accuracy": 0.9422,
+        "macro_f1": 0.8928
+      },
+      {
+        "fold": 7,
+        "test_samples": 173,
+        "accuracy": 0.9364,
+        "macro_f1": 0.8443
+      },
+      {
+        "fold": 8,
+        "test_samples": 173,
+        "accuracy": 0.9422,
+        "macro_f1": 0.899
+      },
+      {
+        "fold": 9,
+        "test_samples": 172,
+        "accuracy": 0.9419,
+        "macro_f1": 0.8859
+      },
+      {
+        "fold": 10,
+        "test_samples": 172,
+        "accuracy": 0.9302,
+        "macro_f1": 0.9117
+      }
+    ],
+    "accuracy_mean": 0.9294,
+    "accuracy_std": 0.0153,
+    "macro_f1_mean": 0.8455,
+    "macro_f1_std": 0.055
+  }
+}
